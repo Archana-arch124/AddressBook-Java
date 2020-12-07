@@ -93,7 +93,62 @@ class AddressBook
             System.out.println(contactName + " is not empty contact or it is not created");
             System.out.println("use other option c to create new contact or option e to edit already created one");
         }
+    }
+	void displayAllContacts() 
+    {
+        boolean flag = false;
+        if (emptyContacts.size() != 0) 
+        {
+            System.out.println("the empty contacts are:");
+            for (String contact : emptyContacts) 
+            {
+                System.out.println(contact);
+            }
+            flag=true;
+        }
+        if (nonEmptyContacts.size() != 0) 
+        {
+            System.out.println("the non empty contacts are:");
+            for (String contact : nonEmptyContacts) 
+            {
+                System.out.println(contact);
+            }
+            flag=true;
+        } 
+        if(!flag)
+        {
+            System.out.println("no contacts are created yet");
+        }
 
+    }
+    //prints the given file content
+    void readFile(String fileName)throws Exception
+    {
+        FileReader fileReader = new FileReader(fileName);
+        int character;
+        while ((character = fileReader.read()) != -1) 
+        {
+            System.out.print((char) character);
+        }
+        fileReader.close();
+    }
+    //displays all fields in the given contact
+    void viewContactInfo()throws Exception
+    {
+        System.out.print("enter name of the contact to view:");
+        String contactName = scanner.nextLine();
+        if(emptyContacts.contains(contactName))
+        {
+            System.out.println("pleast fill the contact "+ contactName+ " before viewing it");
+            return;
+        }
+        else if(!nonEmptyContacts.contains(contactName))
+        {
+            System.out.println("please create the contact "+contactName+" before viewing it");
+            return;
+        }
+        System.out.println("the content of " + contactName + " is:");
+        readFile(contactName);
     }
 }	
 	
