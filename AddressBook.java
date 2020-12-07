@@ -45,5 +45,55 @@ class AddressBook
             }
         }
     }
+	void writeFile(String fileName,String content)throws Exception
+    {
+        FileWriter fw = new FileWriter(fileName);
+        fw.write(content);
+        fw.close();
+        nonEmptyContacts.add(fileName);
+    }
+   
+    Boolean validate(String name, String regex) 
+    {
+        return Pattern.matches(regex, name);
+    }
+
+    String takeInput(String field, String pattern) 
+    {
+        String input;
+        do 
+        {
+            System.out.print("enter " + field + ":");
+            input = scanner.nextLine();
+        } while (!validate(input, pattern));
+        return input;
+    }
+
+    //given fields are added into contact
+    void fillContactDetails()throws Exception
+    {
+        System.out.print("enter empty contact name which is going to be filed:");
+        String contactName = scanner.nextLine();
+        if (emptyContacts.contains(contactName)) 
+        {
+            String details = "";
+            details += takeInput("first name", firstNamePattern) + "\n";
+            details += takeInput("last name", lastNamePattern) + "\n";
+            details += takeInput("address", addressPattern) + "\n";
+            details += takeInput("city", cityPattern) + "\n";
+            details += takeInput("state", statePattern) + "\n";
+            details += takeInput("zip code", zipPattern) + "\n";
+            details += takeInput("phone number", phoneNumberPattern) + "\n";
+            writeFile(contactName, details);
+            emptyContacts.remove(contactName);
+            System.out.println("the given fields are successfully added in " + contactName);
+        }
+        else 
+        {
+            System.out.println(contactName + " is not empty contact or it is not created");
+            System.out.println("use other option c to create new contact or option e to edit already created one");
+        }
+
+    }
 }	
 	
